@@ -1107,7 +1107,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   camera: {fileID: 1789906974}
   OpeningSize: 2
-  MaxSize: 1
+  MaxSize: 2
 --- !u!1 &1789906969
 GameObject:
   m_ObjectHideFlags: 0
