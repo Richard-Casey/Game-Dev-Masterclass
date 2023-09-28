@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Default Material
-  m_Shader: {fileID: -6465566751694194690, guid: 6943be508569111439b987551f7e8d25, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 1505455e629c5784c938a3602ccadb08, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
