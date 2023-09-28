@@ -1,27 +1,53 @@
+using System.Collections.Generic;
 using UnityEngine;
 
+public enum AbilityType
+{
+    Melee,
+    Block,
+    Dash,
+    StrongMeleeAttack,
+    ThreeArrowAttack,
+    Shield,
+    Teleport,
+    ExplodingBolt
+}
 
 // This script needs to be attached to each playable character in the game
 // The 'abilities' array will be populated automatically when the game starts through the Start() method.
 public class AbilityManager : MonoBehaviour
 {
-    public Abilities.Ability[] abilities;
+    public Dictionary<AbilityType, Abilities.Ability> abilities;
+    public Dictionary<KeyCode, AbilityType> keyBindings;
 
     private void Start()
     {
         // Initialise abilities
-        abilities = new Abilities.Ability[8]; // This will need to be modified as abilities are added/removed!
-        abilities[0] = new Abilities.Melee();
-        abilities[1] = new Abilities.Block();
-        abilities[2] = new Abilities.Dash();
-        abilities[3] = new Abilities.StrongMeleeAttack();
-        abilities[4] = new Abilities.ThreeArrowAttack();
-        abilities[5] = new Abilities.Shield();
-        abilities[6] = new Abilities.Teleport();
-        abilities[7] = new Abilities.ExplodingBolt();
+        abilities = new Dictionary<AbilityType, Abilities.Ability>();
+        foreach (AbilityType type in System.Enum.GetValues(typeof(AbilityType)))
+        {
+            Abilities.Ability ability =
+                System.Activator.CreateInstance(System.Type.GetType("Abilities+" + type.ToString())) as
+                    Abilities.Ability;
+            abilities.Add(type, ability);
+            Debug.Log("Ability: " + ability.abilityName + " added to dictionary");
+        }
+        
+        // Initialise key bindings - Yeees this will change.
+        keyBindings = new Dictionary<KeyCode, AbilityType>
+        {
+            { KeyCode.U, AbilityType.Melee },
+            { KeyCode.I, AbilityType.Block },
+            { KeyCode.O, AbilityType.Dash },
+            { KeyCode.P, AbilityType.StrongMeleeAttack },
+            { KeyCode.H, AbilityType.ThreeArrowAttack },
+            { KeyCode.J, AbilityType.Shield },
+            { KeyCode.K, AbilityType.Teleport },
+            { KeyCode.L, AbilityType.ExplodingBolt }
+        };
 
         // Conformation in console that array is being populated
-        foreach (var ability in abilities)
+        foreach (var ability in abilities.Values)
         {
             Debug.Log("Ability: " + ability.abilityName + " added to array");
         }
@@ -29,45 +55,20 @@ public class AbilityManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.U))
+        foreach (var key in keyBindings.Keys)
         {
-            ActivateAbility(0, this.gameObject);
-        }
-        else if (Input.GetKeyDown(KeyCode.I))
-        {
-            ActivateAbility(1, this.gameObject);
-        }
-        else if (Input.GetKeyDown(KeyCode.O))
-        {
-            ActivateAbility(2, this.gameObject);
-        }
-        else if (Input.GetKeyDown(KeyCode.P))
-        {
-            ActivateAbility(3, this.gameObject);
-        }
-        else if (Input.GetKeyDown(KeyCode.H))
-        {
-            ActivateAbility(4, this.gameObject);
-        }
-        else if (Input.GetKeyDown(KeyCode.J))
-        {
-            ActivateAbility(5, this.gameObject);
-        }
-        else if (Input.GetKeyDown(KeyCode.K))
-        {
-            ActivateAbility(6, this.gameObject);
-        }
-        else if (Input.GetKeyDown(KeyCode.L))
-        {
-            ActivateAbility(7, this.gameObject);
+            if (Input.GetKeyDown(key))
+            {
+                ActivateAbility(keyBindings[key], this.gameObject);
+            }
         }
     }
 
-    public void ActivateAbility(int index, GameObject user)
+    public void ActivateAbility(AbilityType type, GameObject user)
     {
-        if (abilities[index] != null)
+        if (abilities.TryGetValue(type, out Abilities.Ability ability))
         {
-            abilities[index].Activate(user);
+            ability.Activate(user);
         }
     }
 }
