@@ -327,7 +327,6 @@ GameObject:
   m_Component:
   - component: {fileID: 110811231}
   - component: {fileID: 110811233}
-  - component: {fileID: 110811232}
   - component: {fileID: 110811234}
   m_Layer: 0
   m_Name: PointOfIntrest
@@ -352,20 +351,6 @@ Transform:
   m_Father: {fileID: 1609758000}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &110811232
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 110811230}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1f253fddb7515841aad99def06e304c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MessageToDisplay: ' Use WSAD To Walk Around'
-  popUp: {fileID: 306200354}
 --- !u!135 &110811233
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -422,10 +407,16 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1609758000}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &238883164 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 35a9d27f737f14b488d92dabf164d4e9, type: 3}
+  m_PrefabInstance: {fileID: 1362337048}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &287755334
 GameObject:
   m_ObjectHideFlags: 0
@@ -617,7 +608,6 @@ Transform:
   - {fileID: 47920328}
   - {fileID: 31432902}
   - {fileID: 1337299196}
-  - {fileID: 1609758000}
   m_Father: {fileID: 391205173}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -849,7 +839,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 977031999}
   m_LocalRotation: {x: 0.3535534, y: -0.3535534, z: 0.14644663, w: 0.8535534}
-  m_LocalPosition: {x: 5, y: 7.0710683, z: -5}
+  m_LocalPosition: {x: 50, y: 70.710686, z: -50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -878,9 +868,9 @@ MonoBehaviour:
   m_LookAt: {fileID: 1855860843}
   m_Follow: {fileID: 1855860843}
   m_Lens:
-    FieldOfView: 60
+    FieldOfView: 6
     OrthographicSize: 5
-    NearClipPlane: -5
+    NearClipPlane: 0.001
     FarClipPlane: 558.9
     Dutch: 0
     ModeOverride: 0
@@ -1348,11 +1338,11 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 486236556}
+    m_TransformParent: {fileID: 209130953}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 35a9d27f737f14b488d92dabf164d4e9, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35a9d27f737f14b488d92dabf164d4e9, type: 3}
       propertyPath: m_LocalScale.x
@@ -1408,7 +1398,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 35a9d27f737f14b488d92dabf164d4e9, type: 3}
       propertyPath: m_Name
-      value: Terminal
+      value: Movement Terminal
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35a9d27f737f14b488d92dabf164d4e9, type: 3}
@@ -1496,7 +1486,51 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 83f4ac36-8538-4a0a-86ed-5accfbb14acf
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5b4aa084-5651-4d02-a771-794901de063a
+    m_ActionName: Player/Look[/Mouse/delta/up,/Mouse/delta/down,/Mouse/delta/left,/Mouse/delta/right]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6c356cd4-0850-4d4d-92d9-0a5ddc362a14
+    m_ActionName: Player/Sprint[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ddfeb5f3-5ca1-4fb5-9850-245503305543
+    m_ActionName: Player/Rotate[/Keyboard/q,/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ce513320-0876-450c-9794-f1d2ff9f065e
+    m_ActionName: Player/InOut[/Keyboard/downArrow,/Keyboard/upArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 81f43946-41f8-4668-b2f0-bb326591a75f
+    m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c9551c15-b661-4e53-8857-a3b9846fb27b
+    m_ActionName: Player/Kneel[/Keyboard/c]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f1c9e5bc-7b3c-4091-8b92-e1d95f992d0c
+    m_ActionName: Player/Crouch[/Keyboard/leftCtrl]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 69a2f95d-0d43-480b-9f1f-8a0834bd610a
+    m_ActionName: Player/Attack1[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e9b4a80d-3c46-46e8-b632-88be95c30a0f
+    m_ActionName: Player/Attack2[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 896e757c-fd97-4e1c-b7f6-648f5892ff6a
+    m_ActionName: Player/Interact[/Keyboard/f]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: MouseNKeyboard
   m_DefaultActionMap: Player
@@ -1583,7 +1617,7 @@ MonoBehaviour:
   RotationSensitivity: 0.45
   ZoomSensitivity: 0.1
   MinZoom: 2
-  MaxZoom: 10
+  MaxZoom: 100
 --- !u!114 &1486769953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1742,6 +1776,196 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 35a9d27f737f14b488d92dabf164d4e9, type: 3}
   m_PrefabInstance: {fileID: 1362337048}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1609758001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238883164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5951552625d6914881d8a51756690bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InteractionDistance: 1
+  OnEnterInteractionArea:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1618996696}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  OnInteraction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 110811230}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 306200354}
+        m_TargetAssemblyTypeName: PopUpTextScript, Assembly-CSharp
+        m_MethodName: DisplayContent
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Press WSAD To Move
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1618996696}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnLeaveInteractionArea:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 306200354}
+        m_TargetAssemblyTypeName: PopUpTextScript, Assembly-CSharp
+        m_MethodName: HideContent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1618996696}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!135 &1609758002
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238883164}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1618996696
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1618996697}
+  - component: {fileID: 1618996700}
+  - component: {fileID: 1618996699}
+  m_Layer: 9
+  m_Name: Range
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1618996697
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1618996696}
+  m_LocalRotation: {x: -0, y: -0.99999565, z: -0, w: 0.00297001}
+  m_LocalPosition: {x: -0.022159899, y: -0.0664, z: -0.04496749}
+  m_LocalScale: {x: 1.1999999, y: 1.2, z: 1.1999999}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1609758000}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: -89.66, z: 0}
+--- !u!23 &1618996699
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1618996696}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: ef300842560e4da4da6b5f142cd224d8, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1618996700
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1618996696}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1789906969
 GameObject:
   m_ObjectHideFlags: 0
@@ -1770,7 +1994,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1789906969}
   m_LocalRotation: {x: 0.3535534, y: -0.3535534, z: 0.14644663, w: 0.8535534}
-  m_LocalPosition: {x: 5, y: 7.0710683, z: -5}
+  m_LocalPosition: {x: 50, y: 70.710686, z: -50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1875,10 +2099,10 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: -5
+  near clip plane: 0.001
   far clip plane: 558.9
-  field of view: 60
-  orthographic: 1
+  field of view: 6
+  orthographic: 0
   orthographic size: 5
   m_Depth: 0
   m_CullingMask:
@@ -2139,7 +2363,7 @@ MonoBehaviour:
   ShoulderOffset: {x: 0, y: 0, z: 0}
   VerticalArmLength: 0
   CameraSide: 0
-  CameraDistance: 10
+  CameraDistance: 100
   CameraCollisionFilter:
     serializedVersion: 2
     m_Bits: 0

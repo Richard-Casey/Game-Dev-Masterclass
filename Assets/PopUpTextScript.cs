@@ -13,12 +13,12 @@ public class PopUpTextScript : MonoBehaviour
 
     public bool isMessageDisplayed() => isMessageActive;
 
-    public void SetContent(StringBuilder input)
+    public void SetContent(string input)
     {
         textMeshPro?.SetText(input);
     }
 
-    public void DisplayContent(StringBuilder input)
+    public void DisplayContent(string input)
     {
         isMessageActive = true;
         gameObject.SetActive(true);
@@ -28,7 +28,7 @@ public class PopUpTextScript : MonoBehaviour
     public void HideContent()
     {
         isMessageActive = false;
-        SetContent(new StringBuilder());
+        SetContent("");
         gameObject.SetActive(false);
     }
 
