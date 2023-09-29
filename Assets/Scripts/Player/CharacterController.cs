@@ -15,6 +15,7 @@ public class CharacterController : MonoBehaviour
     //Private
     Animator Animator;
     Rigidbody rb;
+    CapsuleCollider collider;
     #endregion
 
     #region Booleans
@@ -60,6 +61,7 @@ public class CharacterController : MonoBehaviour
     {
         HasAnimator = TryGetComponent<Animator>(out Animator);
         HasRigidbody = TryGetComponent<Rigidbody>(out rb);
+        TryGetComponent<CapsuleCollider>(out collider);
         _cameraFollow = VirtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
         if (HasAnimator)GetAnimatorIDs();
     }
@@ -91,6 +93,8 @@ public class CharacterController : MonoBehaviour
     public float TargetMoveSpeed = 3f;
     public float DecelerationSpeed = 12f;
     public float Gravity = -9.8f;
+    public float Height = 2f;
+    public float CrouchedHeight = 1.1f;
 
     [Header("Animations",order = 1)]
     public float RotationSmoothTime = .07f;
@@ -193,6 +197,9 @@ public class CharacterController : MonoBehaviour
             Animator.SetBool(KneelID,Input.IsKneel);
             Animator.SetBool(CrouchedID, Input.IsCrouch);
         }
+
+        collider.height = Input.IsCrouch ? CrouchedHeight : Height;
+        collider.center = Input.IsCrouch ? new Vector3(0, CrouchedHeight / 2f, 0) : new Vector3(0, Height / 2f, 0);
     }
     [Header("Jumping", order = 1)]
     public float JumpCooldown = .7f;
