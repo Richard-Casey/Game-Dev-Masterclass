@@ -31,19 +31,42 @@ public class InputManager : MonoBehaviour
     public bool    isAttack2             { private set; get; }
     #region Attack
 
-    void OnAttack1(InputValue value) => SetAttack1(value.isPressed);
+    //void OnAttack1(InputValue value) => SetAttack1(value.isPressed);
 
     private void SetAttack1(bool value)
     {
         isAttack1 = value;
     }
 
-    void OnAttack2(InputValue value) => SetAttack2(value.isPressed);
+    //void OnAttack2(InputValue value) => SetAttack2(value.isPressed);
 
     private void SetAttack2(bool value)
     {
         isAttack2 = value;
     }
+
+    void OnAttack1(InputValue value)
+    {
+        isAttack1 = value.isPressed;
+        if (value.isPressed)
+        {
+            AbilityType ability = GameManager.Instance.GetAbilitiesForClass(GameManager.Instance.playerClass).Item1;
+            AbilityManager.Instance.ActivateAbility(ability, this.gameObject);
+        }
+    }
+
+
+    void OnAttack2(InputValue value)
+    {
+        SetAttack2(value.isPressed);
+        if (value.isPressed)
+        {
+            AbilityType ability = GameManager.Instance.GetAbilitiesForClass(GameManager.Instance.playerClass).Item2;
+            AbilityManager.Instance.ActivateAbility(ability, this.gameObject);
+        }
+    }
+
+
     void OnInteract(InputValue value) => SetInteract(value.isPressed);
 
     private void SetInteract(bool value)
@@ -55,7 +78,7 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(isInteract);
+        //Debug.Log(isInteract);
     }
 
     #endregion

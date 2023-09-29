@@ -13,17 +13,16 @@ public class Abilities : MonoBehaviour
         public abstract void Activate(GameObject user);
     }
 
-    // Intended for female character
-    public class StrongMeleeAttack : Ability
+    public class Melee : Ability
     {
         public float damage;
 
-        public StrongMeleeAttack()
+        public Melee()
         {
-            abilityName = "Strong Melee Attack";
-            cooldown = 5.0f;
-            duration = 1.0f;
-            damage = 12.0f;
+            abilityName = "Melee Attack";
+            cooldown = 0.1f;
+            duration = 0.2f;
+            damage = 4.0f;
         }
 
         public override void Activate(GameObject user)
@@ -33,17 +32,16 @@ public class Abilities : MonoBehaviour
             //{
             //    animator.SetTrigger(StrongMeleeAttackAnimation);
             //}
-            Debug.Log("Performing Strong Melee Attack");
+            Debug.Log("Performing Melee Attack");
         }
     }
 
-    // Intended for female character
     public class Block : Ability
     {
         public Block()
         {
             abilityName = "Block";
-            cooldown = 7.5f;
+            cooldown = 4.5f;
             duration = 4.0f;
         }
 
@@ -54,11 +52,10 @@ public class Abilities : MonoBehaviour
             //{
             //    animator.SetTrigger(BlockAnimation);
             //}
-            Debug.Log("Blocking");
+            Debug.Log("Performing Block");
         }
     }
 
-    //Intended for female Character
     public class Dash : Ability
     {
 
@@ -67,7 +64,7 @@ public class Abilities : MonoBehaviour
         public Dash()
         {
             abilityName = "Dash";
-            cooldown = 5.0f;
+            cooldown = 4.0f;
             duration = 1.5f;
             dashDistance = 3.0f;
         }
@@ -83,43 +80,15 @@ public class Abilities : MonoBehaviour
         }
     }
 
-    // Intended for female character
-    public class Melee : Ability
+
+    public class FireWeapon : Ability
     {
-        public float damage;
 
-        public Melee()
+        public FireWeapon()
         {
-            abilityName = "Melee Attack";
-            cooldown = 0.01f;
-            duration = 0.2f;
-            damage = 3.0f;
-        }
-
-        public override void Activate(GameObject user)
-        {
-            //Animator animator = user.GetComponent<Animator>();
-            //if (animator != null)
-            //{
-            //    animator.SetTrigger(PunchAnimation);
-            //}
-            Debug.Log("Default Attack (Melee)");
-        }
-    }
-
-
-
-    // Intended for male character
-    public class ExplodingBolt : Ability
-    {
-        public float explosionRadius;
-
-        public ExplodingBolt()
-        {
-            abilityName = "Exploding Bolt";
-            cooldown = 10.0f;
-            duration = 2.0f;
-            explosionRadius = 5.0f;
+            abilityName = "Fire Weapon";
+            cooldown = 0.5f;
+            duration = 0.15f;
         }
 
         public override void Activate(GameObject user)
@@ -129,21 +98,20 @@ public class Abilities : MonoBehaviour
             //{
             //    animator.SetTrigger(DrawArrowAnimation);
             //}
-            Debug.Log("Shooting Exploding Bolt");
+            Debug.Log("Firing Weapon");
         }
     }
 
-    // Intended for male character
-    public class Teleport : Ability
+    public class ThrowProjectile : Ability
     {
-        public float teleportDistance;
+        public float projectileRadius;
 
-        public Teleport()
+        public ThrowProjectile()
         {
-            abilityName = "Teleport";
-            cooldown = 8.0f;
+            abilityName = "Throw Projectile";
+            cooldown = 0.8f;
             duration = 1.0f;
-            teleportDistance = 5.0f;
+            projectileRadius = 3.5f;
         }
 
         public override void Activate(GameObject user)
@@ -153,18 +121,17 @@ public class Abilities : MonoBehaviour
             //{
             //    animator.SetTrigger(TeleportAnimation);
             //}
-            Debug.Log("Teleporting");
+            Debug.Log("Throwing Projectile");
         }
     }
 
-    //Intended for male character
-    public class Shield : Ability
+    public class Push : Ability
     {
-        public Shield()
+        public Push()
         {
-            abilityName = "Shield";
-            cooldown = 10.0f;
-            duration = 3.5f;
+            abilityName = "Push";
+            cooldown = 2.5f;
+            duration = 2.0f;
         }
 
         public override void Activate(GameObject user)
@@ -174,32 +141,8 @@ public class Abilities : MonoBehaviour
             //{
             //    animator.SetTrigger(ShieldAnimation);
             //}
-            Debug.Log("Deploying Shield");
+            Debug.Log("Performing Push");
         }
     }
-
-    //Intended for male character
-    public class ThreeArrowAttack : Ability
-    {
-        public float damage;
-
-        public ThreeArrowAttack()
-        {
-            abilityName = "Three Arrow Attack";
-            cooldown = 0.01f;
-            duration = 0.2f;
-            damage = 3.0f;
-        }
-
-        public override void Activate (GameObject user)
-        {
-            //Animator animator = user.GetComponent<Animator>();
-            //if (animator != null)
-            //{
-            //    animator.SetTrigger(DrawArrowAnimation);
-            //}
-            Debug.Log("Default Attack (Three Arrows)");
-        }
-    }
-
+    
 }

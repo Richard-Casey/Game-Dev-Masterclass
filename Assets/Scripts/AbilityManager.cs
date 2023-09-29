@@ -5,20 +5,32 @@ public enum AbilityType
 {
     Melee,
     Block,
+    FireWeapon,
     Dash,
-    StrongMeleeAttack,
-    ThreeArrowAttack,
-    Shield,
-    Teleport,
-    ExplodingBolt
+    ThrowProjectile,
+    Push
 }
 
 // This script needs to be attached to each playable character in the game
-// The 'abilities' array will be populated automatically when the game starts through the Start() method.
+// The 'abilities' dictionary will be populated automatically when the game starts through the Start() method.
 public class AbilityManager : MonoBehaviour
 {
+    public static AbilityManager Instance;
+
     public Dictionary<AbilityType, Abilities.Ability> abilities;
-    public Dictionary<KeyCode, AbilityType> keyBindings;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
 
     private void Start()
     {
@@ -29,40 +41,17 @@ public class AbilityManager : MonoBehaviour
             Abilities.Ability ability =
                 System.Activator.CreateInstance(System.Type.GetType("Abilities+" + type.ToString())) as
                     Abilities.Ability;
-            abilities.Add(type, ability);
-            Debug.Log("Ability: " + ability.abilityName + " added to dictionary");
-        }
-        
-        // Initialise key bindings - Yeees this will change.
-        keyBindings = new Dictionary<KeyCode, AbilityType>
-        {
-            { KeyCode.U, AbilityType.Melee },
-            { KeyCode.I, AbilityType.Block },
-            { KeyCode.O, AbilityType.Dash },
-            { KeyCode.P, AbilityType.StrongMeleeAttack },
-            { KeyCode.H, AbilityType.ThreeArrowAttack },
-            { KeyCode.J, AbilityType.Shield },
-            { KeyCode.K, AbilityType.Teleport },
-            { KeyCode.L, AbilityType.ExplodingBolt }
-        };
-
-        // Conformation in console that array is being populated
-        foreach (var ability in abilities.Values)
-        {
-            Debug.Log("Ability: " + ability.abilityName + " added to array");
-        }
-    }
-
-    private void Update()
-    {
-        foreach (var key in keyBindings.Keys)
-        {
-            if (Input.GetKeyDown(key))
+            if (ability != null)
             {
-                ActivateAbility(keyBindings[key], this.gameObject);
+                abilities.Add(type, ability);
+            }
+            else
+            {
+                Debug.LogWarning("Could not create ability for type: " + type.ToString());
             }
         }
     }
+
 
     public void ActivateAbility(AbilityType type, GameObject user)
     {
