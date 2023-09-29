@@ -2,10 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 public class InputManager : MonoBehaviour
 {
 
+
+    #region Events
+
+    public static UnityEvent Interaction = new UnityEvent();
+
+    #endregion
 
     //public Texture2D CrosshairTexture;
 
@@ -42,8 +49,14 @@ public class InputManager : MonoBehaviour
     private void SetInteract(bool value)
     {
         isInteract = value;
+        if(value)Interaction?.Invoke();
     }
 
+
+    void Update()
+    {
+        Debug.Log(isInteract);
+    }
 
     #endregion
 

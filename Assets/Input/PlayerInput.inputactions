@@ -354,7 +354,7 @@
                     "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "MouseNKeyboard",
                     "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
