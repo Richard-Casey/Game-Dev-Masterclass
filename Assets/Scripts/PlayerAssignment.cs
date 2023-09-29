@@ -29,8 +29,7 @@ public class PlayerAssignment : MonoBehaviour
     private static List<PlayerClass> assignedClasses = new List<PlayerClass>();
     private static List<PlayerRole> assignedRoles = new List<PlayerRole>();
 
-    void Start()
-    {
+    void Start() {
         AssignRandomClassAndRole();
     }
 
