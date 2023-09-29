@@ -9,18 +9,19 @@ public class InputManager : MonoBehaviour
 
     //public Texture2D CrosshairTexture;
 
-    public Vector2 MouseInputDelta { private set; get; }
+    public Vector2 MouseInputDelta       { private set; get; }
     public Vector2 MousePositionOnScreen { private set; get; }
-    public Vector2 MoveInput { private set; get; }
-    public bool ConfineMouseInput { private set; get; }
-    public bool IsSprining { private set; get; }
-    public bool IsJumping { private set; get; }
-    public bool IsKneel { private set; get; }
-    public bool IsCrouch { private set; get; }
-    public float RotateInput { private set; get; }
-    public float InOutInput { private set; get; }
-    public bool isAttack1 { private set; get; }
-    public bool isAttack2 { private set; get; }
+    public Vector2 MoveInput             { private set; get; }
+    public bool    ConfineMouseInput     { private set; get; }
+    public bool    IsSprining            { private set; get; }
+    public bool    IsJumping             { private set; get; }
+    public bool    IsKneel               { private set; get; }
+    public bool    IsCrouch              { private set; get; }
+    public float   RotateInput           { private set; get; }
+    public float   InOutInput            { private set; get; }
+    public bool    isInteract             { private set; get; }
+    public bool    isAttack1             { private set; get; }
+    public bool    isAttack2             { private set; get; }
     #region Attack
 
     void OnAttack1(InputValue value) => SetAttack1(value.isPressed);
@@ -35,6 +36,12 @@ public class InputManager : MonoBehaviour
     private void SetAttack2(bool value)
     {
         isAttack2 = value;
+    }
+    void OnInteract(InputValue value) => SetInteract(value.isPressed);
+
+    private void SetInteract(bool value)
+    {
+        isInteract = value;
     }
 
 
