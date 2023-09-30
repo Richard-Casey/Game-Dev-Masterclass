@@ -5,17 +5,10 @@ using UnityEngine;
 
 public class ClassStats : MonoBehaviour
 {
-    public enum ClassStatTypes
-    {
-        Melee,
-        Ranged,
-        Count
-    }
-
     public enum StatNames
     {
         AttackDamage,
-        RangedDamage,
+        AttackSpeed,
         Agility,
         ReloadSpeed,
         Range
@@ -23,14 +16,15 @@ public class ClassStats : MonoBehaviour
 
     public class stat
     {
-        ClassStatTypes classtype;
+        //A list of abilities that this stat can apply too
+        List<AbilityType> abilityTypes;
         StatNames name;
         public float value;
         float multiplier;
         int amount;
 
         public float Multiplier() => multiplier;
-        public ClassStatTypes Type() => classtype;
+        public List<AbilityType> Typse() => abilityTypes;
         public int Amount() => amount;
 
         Func<int,int,float> CalculationMethod;
@@ -45,12 +39,12 @@ public class ClassStats : MonoBehaviour
             value += Output;
         }
 
-        public void Type(ClassStatTypes value) => classtype = value;
+        public void Type(List<AbilityType> values) => abilityTypes = values;
         public void Name(StatNames value) => name = value;
 
-        public stat(ClassStatTypes type,StatNames name, float BaseValue, float BaseMultiplier, Func<int,int,float> CalculationMethod)
+        public stat(List<AbilityType> types,StatNames name, float BaseValue, float BaseMultiplier, Func<int,int,float> CalculationMethod)
         {
-            this.classtype = type;
+            this.abilityTypes = types;
             this.name = name;
             this.value = BaseValue;
             this.multiplier = BaseMultiplier;
@@ -73,12 +67,25 @@ public class ClassStats : MonoBehaviour
     {
 
         //Adds a stat with custom calculation function -> idea behind this is reusablility and fuuture balance
-        float AttackSum(int i1,int i2) { return (i1 * (1.2f + 1f / MathF.Max(1, i2))); }
-        Func<int, int, float> AttackDamageCalculation = AttackSum;
-        Stats.Add(new stat(ClassStatTypes.Melee, StatNames.AttackDamage, 1, 1, AttackDamageCalculation));
-      
-        
-        Stats[0].AddAmount(1);
+        float AttackDamageSum(int i1,int i2) { return (i1 * (1.2f + 1f / MathF.Max(1, i2))); }
+        Func<int, int, float> AttackDamageCalculation = AttackDamageSum;
+        Stats.Add(new stat(new List<AbilityType>() { AbilityType.Melee ,AbilityType.FireWeapon,AbilityType.ThrowProjectile}, StatNames.AttackDamage, 1, 1, AttackDamageCalculation));
+
+        float AttackSpeedSum(int i1, int i2) { return (i1 * (1.2f + 1f / MathF.Max(1, i2))); }
+        Func<int, int, float> AttackSpeedCalculation = AttackSpeedSum;
+        Stats.Add(new stat(new List<AbilityType>() { AbilityType.Melee, AbilityType.FireWeapon, AbilityType.ThrowProjectile }, StatNames.AttackSpeed, 1, 1, AttackSpeedCalculation));
+
+        float AgilitySum(int i1, int i2) { return (i1 * (1.2f + 1f / MathF.Max(1, i2))); }
+        Func<int, int, float> AgilityCalculation = AgilitySum;
+        Stats.Add(new stat(new List<AbilityType>() {}, StatNames.Agility, 1, 1, AgilityCalculation));
+
+        float ReloadSpeedSum(int i1, int i2) { return (i1 * (1.2f + 1f / MathF.Max(1, i2))); }
+        Func<int, int, float> ReloadSpeedCalculation = ReloadSpeedSum;
+        Stats.Add(new stat(new List<AbilityType>() { AbilityType.FireWeapon, AbilityType.ThrowProjectile }, StatNames.ReloadSpeed, 1, 1, ReloadSpeedCalculation));
+
+        float RangeSum(int i1, int i2) { return (i1 * (1.2f + 1f / MathF.Max(1, i2))); }
+        Func<int, int, float> RangeCalculation = RangeSum;
+        Stats.Add(new stat(new List<AbilityType>() { AbilityType.FireWeapon, AbilityType.ThrowProjectile }, StatNames.Range, 1, 1, RangeCalculation));
     }
 
 

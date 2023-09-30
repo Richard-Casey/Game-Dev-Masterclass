@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,29 +9,40 @@ public class Interactable : MonoBehaviour
 {
 
     [SerializeField] float InteractionDistance = 1f;
-    [SerializeField] UnityEvent OnEnterInteractionArea;
-    [SerializeField] UnityEvent OnInteraction;
-    [SerializeField] UnityEvent OnLeaveInteractionArea;
+    [SerializeField] UnityEvent<GameObject> OnEnterInteractionArea;
+    [SerializeField] UnityEvent<GameObject> OnInteraction;
+    [SerializeField] UnityEvent<GameObject> OnStay;
+    [SerializeField] UnityEvent<GameObject> OnLeaveInteractionArea;
 
-
+    [ExecuteInEditMode]
     void Awake()
     {
-        if (!gameObject.TryGetComponent<SphereCollider>(out SphereCollider collider))
+        SphereCollider collider;
+        if (!gameObject.TryGetComponent<SphereCollider>(out collider))
         {
             SphereCollider thisCollider = gameObject.AddComponent<SphereCollider>();
             thisCollider.isTrigger = true;
         }
+
+        collider.isTrigger = true;
+        collider.radius = InteractionDistance;
     }
 
-    void OnTriggerEnter()
+
+    void OnTriggerEnter(Collider collider)
     {
-        OnEnterInteractionArea.Invoke();
+        OnEnterInteractionArea.Invoke(collider.gameObject);
         InputManager.Interaction.AddListener(OnInteraction.Invoke);
     }
 
-    void OnTriggerExit()
+    void OnTriggerStay(Collider collider)
+    {
+        OnStay?.Invoke(collider.gameObject);
+    }
+
+    void OnTriggerExit(Collider collider)
     {
         InputManager.Interaction.RemoveListener(OnInteraction.Invoke);
-        OnLeaveInteractionArea?.Invoke();
+        OnLeaveInteractionArea?.Invoke(collider.gameObject);
     }
 }

@@ -10,7 +10,7 @@ public class InputManager : MonoBehaviour
 
     #region Events
 
-    public static UnityEvent Interaction = new UnityEvent();
+    public static UnityEvent<GameObject> Interaction = new UnityEvent<GameObject>();
 
     #endregion
 
@@ -61,8 +61,8 @@ public class InputManager : MonoBehaviour
         SetAttack2(value.isPressed);
         if (value.isPressed)
         {
-            AbilityType ability = GameManager.Instance.GetAbilitiesForClass(GameManager.Instance.playerClass).Item2;
-            AbilityManager.Instance.ActivateAbility(ability, this.gameObject);
+            /*AbilityType ability = GameManager.Instance.GetAbilitiesForClass(GameManager.Instance.playerClass).Item2;
+            AbilityManager.Instance.ActivateAbility(ability, this.gameObject);*/
         }
     }
 
@@ -72,7 +72,7 @@ public class InputManager : MonoBehaviour
     private void SetInteract(bool value)
     {
         isInteract = value;
-        if(value)Interaction?.Invoke();
+        if(value)Interaction?.Invoke(this.gameObject);
     }
 
 
