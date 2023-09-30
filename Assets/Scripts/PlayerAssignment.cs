@@ -35,6 +35,7 @@ public class PlayerAssignment : MonoBehaviour
             GameObject gameManagerObj = new GameObject("GameManager");
             gameManagerObj.AddComponent<GameManager>();
         }
+
         if (!GameManager.Instance.isClassAndRoleAssigned)
         {
             // Randomly assign a class and role
