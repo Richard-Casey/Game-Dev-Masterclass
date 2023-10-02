@@ -34,6 +34,11 @@ public class PlayerAssignment : MonoBehaviour
         {
             GameObject gameManagerObj = new GameObject("GameManager");
             gameManagerObj.AddComponent<GameManager>();
+            GameObject currencyValueObject = GameObject.Find(("CurrencyValue"));
+            if (currencyValueObject != null)
+            {
+                GameManager.Instance.currencyValue = currencyValueObject.GetComponent<TextMeshProUGUI>();
+            }
         }
 
         if (!GameManager.Instance.isClassAndRoleAssigned)

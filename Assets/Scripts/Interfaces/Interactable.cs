@@ -10,7 +10,7 @@ public class Interactable : MonoBehaviour
 
     [SerializeField] float InteractionDistance = 1f;
     [SerializeField] UnityEvent<GameObject> OnEnterInteractionArea;
-    [SerializeField] UnityEvent<GameObject> OnInteraction;
+    [SerializeField] protected UnityEvent<GameObject> OnInteraction;
     [SerializeField] UnityEvent<GameObject> OnStay;
     [SerializeField] UnityEvent<GameObject> OnLeaveInteractionArea;
 
