@@ -50,7 +50,7 @@ public class InputManager : MonoBehaviour
         isAttack1 = value.isPressed;
         if (value.isPressed)
         {
-            AbilityType ability = GameManager.Instance.GetAbilitiesForClass(GameManager.Instance.playerClass).Item1;
+            AbilityType ability = GameManager.GetInstance().GetAbilitiesForClass(GameManager.Instance.playerClass).Item1;
             AbilityManager.Instance.ActivateAbility(ability, this.gameObject);
         }
     }
@@ -61,8 +61,8 @@ public class InputManager : MonoBehaviour
         SetAttack2(value.isPressed);
         if (value.isPressed)
         {
-            /*AbilityType ability = GameManager.Instance.GetAbilitiesForClass(GameManager.Instance.playerClass).Item2;
-            AbilityManager.Instance.ActivateAbility(ability, this.gameObject);*/
+            AbilityType ability = GameManager.GetInstance().GetAbilitiesForClass(GameManager.Instance.playerClass).Item2;
+            AbilityManager.Instance.ActivateAbility(ability, this.gameObject);
         }
     }
 

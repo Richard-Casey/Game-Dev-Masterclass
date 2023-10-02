@@ -76,6 +76,9 @@ public class Abilities : MonoBehaviour
             //{
             //    animator.SetTrigger(DashAnimation);
             //}
+
+
+            
             Debug.Log("Performing Dash");
         }
     }
@@ -144,5 +147,35 @@ public class Abilities : MonoBehaviour
             Debug.Log("Performing Push");
         }
     }
-    
+
+
+
+    public abstract class MovementAbility
+    {
+        public float Distance { get; private set; }
+        public float Power { get; private set; }
+        public float Cooldown { get; private set; }
+        private float CurrentCooldown { get; set; }
+        private int AnimationID { get; set; }
+
+        public abstract bool PerfromAbility();
+    }
+
+    public abstract class Attack
+    {
+        public int Damage { get; private set; }
+        public float Range { get; private set; }
+        public float Width { get; private set; }
+        public float AttackSpeed { get; private set; }
+        public float Cooldown { get; private set; }
+        private float CurrentCooldown { get; set; }
+        private int AnimationID { get; set; }
+
+        public abstract bool PerfromAttack();
+
+    }
+
 }
+
+
+

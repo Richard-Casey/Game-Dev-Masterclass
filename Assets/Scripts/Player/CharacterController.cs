@@ -25,8 +25,10 @@ public class CharacterController : MonoBehaviour
     public bool isSloped { private set; get; }
     public bool isIdle { private set; get; }
     public bool isMoveable { private set; get; }
-
     public bool _jumped { private set; get; }
+
+    [SerializeField] bool CanCrouch = true;
+    [SerializeField] bool CanKneel = false;
     #endregion
 
     #region LayerMasks
@@ -129,7 +131,7 @@ public class CharacterController : MonoBehaviour
 
         float MultipliedTargetMoveSpeed = TargetMoveSpeed * MovementMultiplier;
 
-        if (Input.IsCrouch)
+        if (Input.IsCrouch && CanCrouch)
             MultipliedTargetMoveSpeed = Input.IsSprining ? MultipliedTargetMoveSpeed * CrouchRunMultiplier : MultipliedTargetMoveSpeed * CrouchWalkMultiplier;
 
 
@@ -139,7 +141,7 @@ public class CharacterController : MonoBehaviour
         if(_animationBlend < .01f) _animationBlend = 0f;
 
         //Normal Grounded Input
-        if (isGrounded && !_jumped && !Input.IsKneel && isMoveable)
+        if (isGrounded && !_jumped && !(Input.IsKneel && CanKneel) && isMoveable)
         {
             //Handle Deceleration
             if (_inputDirection.magnitude == 0f && _velocity.magnitude >= IdleThreshold)
@@ -164,7 +166,7 @@ public class CharacterController : MonoBehaviour
         }
 
         //If we are in the air handle air movement and apply gravity down
-        else if (!isGrounded && !Input.IsKneel)
+        else if (!isGrounded && !(Input.IsKneel && CanKneel))
         {
             Vector3 TargetVelocity =
                 Vector3.ClampMagnitude((_inputDirection * MultipliedTargetMoveSpeed * Time.fixedDeltaTime),
@@ -194,8 +196,8 @@ public class CharacterController : MonoBehaviour
         {
             Animator.SetFloat(SpeedID,Mathf.Clamp(_animationBlend * rb.velocity.magnitude * 1.2f,0f,TargetMoveSpeed));
             Animator.SetFloat(MotionSpeedID,Input.MoveInput.magnitude);
-            Animator.SetBool(KneelID,Input.IsKneel);
-            Animator.SetBool(CrouchedID, Input.IsCrouch);
+            Animator.SetBool(KneelID,Input.IsKneel && CanKneel);
+            Animator.SetBool(CrouchedID, Input.IsCrouch && CanCrouch);
         }
 
         collider.height = Input.IsCrouch ? CrouchedHeight : Height;
