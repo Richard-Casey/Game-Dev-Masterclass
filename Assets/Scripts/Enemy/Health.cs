@@ -24,4 +24,15 @@ public class Health : MonoBehaviour, IDamagable
             OnDeath?.Invoke(transform.position);
         }
     }
+
+
+    void Start()
+    {
+        OnDeath += Death;
+    }
+
+    void Death(Vector3 DeathPosition)
+    {
+
+    }
 }
