@@ -1,20 +1,42 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System.IO;
+using OpenCover.Framework.Model;
 using TMPro;
-
-
+using Unity.VisualScripting;
+using UnityEditor;
+using Random = UnityEngine.Random;
+using File = System.IO.File;
 public class GameManager : MonoBehaviour
 {
+
+    //////////////////////////////////////////////////////////
+    [System.Serializable]
+    public class PersistantData
+    {
+        [SerializeField] public int currency = 0;
+        [SerializeField] public string test = "";
+    }
+
+
+    [SerializeField] public PersistantData SaveableData = new();
+    String DefaultSaveName = "SavableData";
+    //////////////////////////////////////////////////////////
+
+
+    
     public static GameManager Instance;
 
-    public int currency = 0;
+
     public TextMeshProUGUI currencyValue;
 
     public PlayerAssignment.PlayerClass playerClass;
     public PlayerAssignment.PlayerRole playerRole;
 
     public bool isClassAndRoleAssigned = false;
+
 
     // Add this Dictionary to map PlayerClass to a pair of AbilityType
     public Dictionary<PlayerAssignment.PlayerClass, (AbilityType, AbilityType)> classAbilities = new Dictionary<PlayerAssignment.PlayerClass, (AbilityType, AbilityType)>
@@ -26,6 +48,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        SaveableData = DeserializeFromSaveFile<PersistantData>("SavableData");
+
         if (Instance == null)
         {
             Instance = this;
@@ -39,14 +63,19 @@ public class GameManager : MonoBehaviour
             }
 
             SceneManager.sceneLoaded += OnSceneLoaded;
+
+
+            ///////////////////////////////////////////
+            SceneManager.sceneLoaded += OnSceneUnloaded;
+            ///////////////////////////////////////////
         }
 
         else if (Instance != this)
         {
             Destroy(gameObject);
         }
-    }
 
+    }
 
 
     public static GameManager GetInstance()
@@ -74,19 +103,68 @@ public class GameManager : MonoBehaviour
 
     public void AddCurrency(int amount)
     {
-        currency += amount;
+        SaveableData.currency += amount;
+        //////////////////////////
+        UpdateCurrencyUI();
+        //////////////////////////
     }
 
     public void SubtractCurrency(int amount)
     {
-        currency -= amount;
-        currency = Mathf.Max(0, currency); //  To make sure that it doesnt go below zero
+        if (SaveableData.currency - amount <= 0) SaveableData.currency = 0;
+        else SaveableData.currency -= amount;
+        //////////////////////////
+        UpdateCurrencyUI();
+        //////////////////////////
     }
 
     public void UpdateCurrencyUI()
     {
-        currencyValue.text = currency.ToString();
+        currencyValue.text = SaveableData.currency.ToString();
     }
+
+    ////////////////////////////////////////////////////
+
+    //Create a wrapper for the serialize function that uses a default path
+    private static void SerializeToDefaultFile<T>(T DataToSave)
+    {
+        SerializeToSaveFile("SavableData", DataToSave);
+    }
+
+    //Static function which saves Data type T to Filename
+    public static void SerializeToSaveFile<T>(string Filename , T DataToSerialize)
+    {
+        string jsonOutput = JsonUtility.ToJson(DataToSerialize);
+        string FullFilePath = Application.persistentDataPath + Path.AltDirectorySeparatorChar + Filename + ".json";
+        File.WriteAllText(FullFilePath, jsonOutput);
+    }
+
+    //Static function which Loads Data type T from Filename and returns it
+    public static T DeserializeFromSaveFile<T>(string Filename)
+    {
+        string FullFilePath = Application.persistentDataPath +"/"+ Filename + ".json";
+        T DataToReturn = default;
+        //If The File Exists Read It
+        if (File.Exists(FullFilePath))
+        {
+            string FileOutput = File.ReadAllText(FullFilePath);
+            DataToReturn = JsonUtility.FromJson<T>(FileOutput);
+        }
+
+        return DataToReturn;
+    }
+
+    public void OnDestroy()
+    {
+        SerializeToDefaultFile(SaveableData);
+    }
+
+
+    void OnSceneUnloaded(Scene scene, LoadSceneMode mode)
+    {
+        
+    }
+    ////////////////////////////////////////////////////
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
